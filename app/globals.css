@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* root variables: light theme (derived from provided dark palette) */
+:root {
+  /* Brand keys (DEFAULT swatches) */
+  --eerie-black: #1c1d21;
+  --ice-blue: #90fcf9;
+  --air-force-blue: #508ca4;
+  --sunset: #f2d0a4;
+  --icterine: #edf060;
+
+  /* Theme tokens mapped for light UI */
+  --background: #fcf6ed; /* sunset-900 feel for warmth */
+  --foreground: var(--eerie-black); /* strong readable text */
+  --muted-foreground: #6f7382; /* eerie-700 for muted text */
+  --card-bg: #ffffff; /* clear surface on warm background */
+  --border: #b8d2dc; /* air-force-800 subtle cool border */
+
+  /* Buttons/accents (ensure white label contrast) */
+  --accent: #d6871f; /* sunset-300 (works with white text) */
+  --accent-hover: #8f5a14; /* sunset-200 (darker on hover) */
+  --primary: var(--air-force-blue); /* primary actions */
+  --primary-hover: #417083; /* air-force-400 for hover */
+
+  /* Danger tokens */
+  --danger: #ff4d6d;
+  --danger-hover: #e43d5a;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+    "Courier New", monospace;
+}
+
+/* dark theme overrides when .dark is present on <html> */
+html.dark {
+  /* Dark theme using provided palette */
+  --background: var(--eerie-black); /* base dark */
+  --foreground: #e9fefe; /* ice-blue-900 for high readability */
+  --muted-foreground: #9ea1ac; /* eerie-800 for muted text */
+  --card-bg: #17171a; /* eerie-400 as surface */
+  --border: #454852; /* eerie-600 subtle border */
+
+  /* Buttons/accents on dark (white labels retained) */
+  --accent: #d6871f; /* sunset-300 */
+  --accent-hover: #8f5a14; /* sunset-200 */
+  --primary: var(--air-force-blue); /* #508ca4 */
+  --primary-hover: #417083; /* air-force-400 */
+
+  /* Danger tokens */
+  --danger: #ff4d6d;
+  --danger-hover: #e43d5a;
+}
+
+/* base styles */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* utility tokens for use in markup */
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+
+.border {
+  border-color: var(--border);
+}
+
+.bg-card {
+  background: var(--card-bg);
+}
+
+.bg-muted {
+  background: var(--card-bg);
+}
+
+/* page background utility */
+.bg-background {
+  background: var(--background);
+}
+
+/* small component adjustments */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+/* simple "muted" hover */
+button:hover,
+a:hover {
+  opacity: 0.9;
+}
+
+/* Form controls: ensure legible surfaces and placeholders in both themes */
+input,
+textarea,
+select {
+  background: var(--card-bg);
+  color: var(--foreground);
+  border-color: var(--border);
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1; /* avoid overly faint default placeholder opacity */
+  transition: color 200ms ease;
+}
+
+/* vendor prefixed placeholders (older browsers) */
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder { color: var(--muted-foreground); opacity: 1; }
+input::-moz-placeholder,
+textarea::-moz-placeholder { color: var(--muted-foreground); opacity: 1; }
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder { color: var(--muted-foreground); opacity: 1; }
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder { color: var(--muted-foreground); opacity: 1; }
