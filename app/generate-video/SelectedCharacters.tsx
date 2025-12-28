@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { Character } from "../lib/types";
+import { resolveBackendUrl } from "./utils";
 
 export default function SelectedCharacters({ characters }: { characters: Character[] }) {
   return (
@@ -17,7 +18,11 @@ export default function SelectedCharacters({ characters }: { characters: Charact
             >
               <div className="relative h-28 w-full overflow-hidden bg-muted">
                 {c.image ? (
-                  <img src={c.image} alt={c.name ?? "char"} className="h-full w-full object-cover object-top" />
+                  <img
+                    src={resolveBackendUrl(c.image)}
+                    alt={c.name ?? "char"}
+                    className="h-full w-full object-cover object-top"
+                  />
                 ) : (
                   <div className="h-full w-full" />
                 )}

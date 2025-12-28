@@ -3,6 +3,21 @@
 import type { Character, ScriptChunk } from "../lib/types";
 import { toDataUrl } from "../lib/media";
 
+// Prefer explicit backend host for relative assets so we don't hit the Next dev server (3000)
+const BACKEND_BASE =
+  process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "http://localhost:3001";
+
+export const resolveBackendUrl = (src?: string | null): string | undefined => {
+  if (!src) return undefined;
+  const s = src.trim();
+  if (!s) return undefined;
+  if (s.startsWith("data:")) return s;
+  if (s.startsWith("http://") || s.startsWith("https://")) return s;
+  const base = BACKEND_BASE.replace(/\/+$/, "");
+  const path = s.replace(/^\/+/, "");
+  return `${base}/${path}`;
+};
+
 export const keyOfName = (s?: string | null) => (s ?? "").trim().toLowerCase();
 
 export async function buildCharImageMap(chars: Character[]): Promise<Record<string, string | undefined>> {
@@ -11,7 +26,7 @@ export async function buildCharImageMap(chars: Character[]): Promise<Record<stri
     chars.map(async (c) => {
       const k = keyOfName(c.name);
       if (!k) return;
-      map[k] = await toDataUrl(c.image ?? undefined);
+      map[k] = await toDataUrl(resolveBackendUrl(c.image));
     })
   );
   return map;
